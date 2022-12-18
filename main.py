@@ -23,12 +23,11 @@ app.config['SECRET_KEY'] = 'Secret_key'
 Bootstrap(app)
 
 
-#
 # class UploadFileForm(FlaskForm):
 #     file = FileField("File")
 #     submit = SubmitField("Upload File")
 
-
+# Color extracting function
 def color_to_pallet(pallet):
     colors_list = str(pallet).replace('([(', '').split(', (')[0:-1]
     df_rgb = [color.split('), ')[0] + ')' for color in colors_list]
@@ -50,6 +49,7 @@ def color_to_pallet(pallet):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET,POST'])
 def home():
+    # For demo vision
     image_file = 'try2.png'
     colors_x = extcolors.extract_from_path(image_file, tolerance=11, limit=11)
     colors = color_to_pallet(colors_x)
@@ -59,6 +59,7 @@ def home():
         img.save(buf, 'jpeg')
         image_bytes = buf.getvalue()
     encoded_string = base64.b64encode(image_bytes).decode()
+    # Getting uploaded file
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file attached in request')
@@ -71,25 +72,28 @@ def home():
             filename = secure_filename(file.filename)
             img = Image.open(file.stream).convert('RGB')
             img = img.resize((300, 300))
+            # Working with stream
             with BytesIO() as buf:
                 img.save(buf, 'jpeg')
                 image_bytes = buf.getvalue()
             encoded_string = base64.b64encode(image_bytes).decode()
             # file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],filename))
             # We don't need to save for this project.
+
+            # Extracting colors
             colors_x = extcolors.extract_from_path(file, tolerance=11, limit=11)
             colors = color_to_pallet(colors_x)
 
         return render_template('index.html', img_data=encoded_string, colors=colors)
     return render_template("index.html", img_data=encoded_string, colors=colors)
 
-
+# For displaying images
 @app.route('/display/<filename>')
 def display_image(filename=""):
     from flask import send_from_directory
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
-
+# contact page
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
