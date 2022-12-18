@@ -1,0 +1,39 @@
+body {
+  font-size: 20px;
+  color: #212529;
+  font-family: 'Lora', 'Times New Roman', serif;
+}
+
+.fa-palette{
+font-size: 40px;
+}
+
+.top-buttons{
+padding-left: 43%;
+}
+.palette_code{
+padding: 1% 1% ;
+
+.palette_percent{
+padding: 10%;}
+}
+.cont-footer{
+padding: 3% 0 3% 0;}
+
+.copyright{
+padding: 3% 0 0 35%;
+}
+.head-contact{
+padding-top:10%;
+text-align:center;}
+.head-title{
+font-size: 4rem;
+padding-left: 42%;
+}
+
+.upload-button{
+font-size:2rem;
+}
+.choose-bar{
+font-size:2rem;
+margin-bottom:1%;}

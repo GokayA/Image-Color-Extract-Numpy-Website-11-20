@@ -1,0 +1,72 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+<head>
+    {% include "header.html" %}
+
+</head>
+<div class="overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1 class="head-title">Color Palette</h1>
+                    <div class="mb-3">
+
+                    </div>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+
+                    {% for message in messages %}
+                    <p style="color:red;">{{ message }}
+                    <p>
+                        {% endfor %}
+
+                        {% endif %}
+                        {% endwith %}
+                    <form method="post" enctype="multipart/form-data">
+                        <p><input class="form-control form-control-lg choose-bar" type="file" id="file" name="file">
+                            <input class="btn btn-secondary btn-lg upload-button" type=submit value=Upload></p>
+                        <img src="data:image/jpeg;base64,{{ img_data }}" id="img-upload" alt="img_data"
+                             class="img-upload"/>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<meta charset="UTF-8">
+<title>Color extract</title>
+
+
+<div class="container" id="color-pattern">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Color</th>
+            <th>Color Code</th>
+            <th>Percentage</th>
+        </tr>
+        </thead>
+
+        {% for color in colors %}
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="background-color:{{color.c_code}};"></td>
+            <td>{{color.c_code}}</td>
+            <td>%{{color.percent}}</td>
+        </tr>
+
+        </tbody>
+
+
+        {% endfor %}
+    </table>
+</div>
+
+<div class="container cont-footer">
+    {% include "footer.html" %}
+</div>
+{% endblock %}
